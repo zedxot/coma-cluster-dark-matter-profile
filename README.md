@@ -119,20 +119,5 @@ pdflatex -shell-escape -interaction=nonstopmode aas_template.tex
 
 ---
 
-## Citation & Paper
-
-If you use this codebase or data products in your research, please cite the manuscript in [`paper/aas_template.tex`](paper/aas_template.tex):
-
-```bibtex
-@article{Hossain2026ComaDESI,
-  title={Dynamical Mapping of the Coma Cluster: Testing $\Lambda$CDM Halo Models and Virial Mass with DESI Spectroscopy},
-  author={Hossain, Jubair},
-  journal={AAS Journal Submission Draft},
-  year={2026}
-}
-```
-
----
-
 ## License
 This project is licensed under the [MIT License](LICENSE).
