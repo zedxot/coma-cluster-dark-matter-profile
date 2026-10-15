@@ -74,18 +74,6 @@ The consistency across optical kinematics, ICM X-ray gas, and weak lensing reinf
 
 ---
 
-## Author & Citation
-
-**Jubair Hossain**  
-Email: [enigmatic.jihad@gmail.com](mailto:enigmatic.jihad@gmail.com)
-
-```bibtex
-@article{Hossain2026ComaDESI,
-  title={Dynamical Mapping of the Coma Cluster: Testing $\Lambda$CDM Halo Models and Virial Mass with DESI Spectroscopy},
-  author={Hossain, Jubair},
-  year={2026}
-}
-```
-
 ## License
 [MIT License](LICENSE)
+
