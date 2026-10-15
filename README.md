@@ -1,123 +1,91 @@
-# Dynamically Mapping the Coma Cluster: Testing $\Lambda\text{CDM}$ Halo Models & Virial Mass with DESI Spectroscopy
+# Mapping the Dark Matter Profile of the Coma Cluster with DESI
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![DESI Iron](https://img.shields.io/badge/Data-DESI%20Iron-orange.svg)](https://data.desi.lbl.gov/)
-[![Paper PDF](https://img.shields.io/badge/Paper-AAS%20TeX%20PDF-red.svg)](paper/aas_template.pdf)
+This project is an observational and dynamical study of the **Coma Cluster (Abell 1656)** using spectroscopic galaxy kinematics from the **Dark Energy Spectroscopic Instrument (DESI)** Iron Data Release. 
 
-## Overview
+Nearly a century after Fritz Zwicky first used galaxy velocity dispersions in Coma to infer the existence of "dunkle Materie," DESI provides thousands of precise redshifts across the cluster field. In this work, I isolate member galaxies, construct a line-of-sight velocity dispersion profile out to the cluster's virial boundary, and test whether cluster-scale dark matter halos favor a cuspy Navarro-Frenk-White ($\Lambda\text{CDM}$) profile or a cored distribution.
 
-This repository presents a complete dynamical mass analysis of the **Coma Cluster (Abell 1656)** using spectroscopic galaxy kinematics from the **Dark Energy Spectroscopic Instrument (DESI)** Iron Data Release. By isolating a high-purity sample of $N = 2,098$ confirmed member galaxies within a projected angular radius of $\theta \leq 2.0^\circ$ ($\approx 3.45\text{ Mpc}$), we dynamically measure the cluster's line-of-sight velocity dispersion profile $\sigma_v(\theta)$, test competing dark matter halo density profiles ($\Lambda\text{CDM}$ cuspy NFW vs. Singular Isothermal Sphere vs. Soft-Core), and determine Coma's enclosed mass distribution and total virial mass.
+A full draft of the manuscript prepared with the AAS TeX template is available in [`paper/aas_template.tex`](paper/aas_template.tex) (compiled PDF: [`paper.pdf`](paper.pdf)).
 
 ---
 
-## Key Results & Figures
+## What This Project Does
 
-### 1. Dark Matter Halo Model Selection ($\chi^2$ & BIC Analysis)
+1. **Member Selection from DESI Iron**:
+   From the primary DESI Iron redshift catalog (`zall-pix-iron.fits`), I selected high-confidence galaxies (`SPECTYPE == 'GALAXY'`, `ZWARN == 0`, `ZCAT_PRIMARY == True`) within a $2.0^\circ$ cone centered on Coma $(\alpha = 194.953^\circ, \delta = 27.981^\circ)$. Applying relativistic Doppler velocity calculations and an iterative $3\sigma$ interloper cut yields a clean kinematic sample of **$N = 2,098$ member galaxies**.
 
-By partitioning the kinematic sample into 8 radial annuli ($\Delta \theta = 0.25^\circ$) and subtracting spectrographic measurement uncertainties in quadrature, we extract an intrinsic velocity dispersion profile declining from $\sigma_{\text{int}} = 1075.94 \pm 40.72\text{ km s}^{-1}$ in the cluster core down to $\sigma_{\text{int}} = 807.01 \pm 85.07\text{ km s}^{-1}$ at the virial boundary.
+2. **Kinematic Profile Extraction**:
+   Member galaxies were grouped into 8 concentric radial annuli ($\Delta \theta = 0.25^\circ$). To get the true physical velocity dispersion, spectrographic measurement uncertainties were subtracted in quadrature. The resulting profile starts at $\sim 1076\text{ km s}^{-1}$ in the dense core and falls off to $\sim 807\text{ km s}^{-1}$ near the virial boundary, with a localized bump around $1.4^\circ$ associated with the infalling NGC 4839 group.
 
-Spherical Jeans modeling and Bayesian model selection conclusively demonstrate that the **Navarro-Frenk-White (NFW)** cuspy density profile provides an optimal fit to DESI galaxy kinematics, outperforming flat and cored profiles:
+3. **Jeans Modeling & Halo Model Selection**:
+   I tested three theoretical halo profiles against the measured velocity dispersion profile using non-linear least-squares fitting and the Bayesian Information Criterion (BIC):
+   - **Singular Isothermal Sphere (SIS)**: Assumes a scale-free $\rho \propto r^{-2}$ falloff and a constant velocity dispersion.
+   - **Soft-Core (Plummer-like)**: Removes the central density cusp with a flattened core.
+   - **Navarro-Frenk-White (NFW)**: The standard cuspy dark matter profile predicted by $\Lambda\text{CDM}$ cosmological simulations ($\rho \propto r^{-1}$ centrally, $\rho \propto r^{-3}$ in the outskirts).
 
-| Halo Density Model | Free Parameters ($k$) | Best-Fit Parameters | $\chi^2$ | d.o.f. | $\chi_\nu^2$ | BIC | $\Delta \text{BIC}$ | Model Verdict |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Singular Isothermal Sphere (SIS)** | 1 | $\sigma_0 = 946.99 \pm 14.69\text{ km s}^{-1}$ | 22.61 | 7 | 3.23 | 24.69 | $+16.42$ | Decisively Ruled Out |
-| **Soft-Core (Plummer-like)** | 2 | $\sigma_{0,c} = 1027.35\text{ km s}^{-1}, \theta_c = 1.414^\circ$ | 7.47 | 6 | 1.24 | 11.63 | $+3.36$ | Disfavored |
-| **NFW (Cuspy CDM)** | 2 | $\sigma_{\text{max}} = 1093.30 \pm 42.66\text{ km s}^{-1}, \theta_s = 1.047^\circ \pm 0.353^\circ$ | **4.11** | **6** | **0.69** | **8.27** | **0.00** | **Optimal Fit ($\Lambda\text{CDM}$)** |
-
-![Coma Cluster Model Selection](model_comparison.png)
-
-*Figure 1: Observed line-of-sight velocity dispersion profile of Coma member galaxies from DESI Iron (black points with red error bars) compared against best-fit SIS baseline (blue dashed), Soft-Core profile (orange dash-dotted), and cuspy NFW profile (green solid).*
-
----
-
-### 2. Dynamical Mass & Virial Radius Estimation
-
-Integrating the best-fit NFW gravitational potential assuming a cluster distance of $D \approx 98.9\text{ Mpc}$ ($z_{\text{coma}} = 0.0231, H_0 = 70\text{ km s}^{-1}\text{Mpc}^{-1}$) yields a physical scale radius of $r_s \approx 1.81\text{ Mpc}$ ($1810\text{ kpc}$).
-
-- **Virial Mass ($r_{\text{vir}} \approx 2.0\text{ Mpc}$, $R_{200}$)**:
-  $$\mathbf{M_{\text{vir}} = (5.11 \pm 0.45) \times 10^{14} \, \mathbf{M}_\odot}$$
-- **Total Aperture Enclosed Mass ($\theta \le 2.0^\circ, r \approx 3.45\text{ Mpc}$)**:
-  $$\mathbf{M(<2.0^\circ) = 9.57 \times 10^{14} \, \mathbf{M}_\odot}$$
-
-![Coma Cluster Enclosed Mass Profile](coma_enclosed_mass_profile.png)
-
-*Figure 2: Enclosed dynamical mass profile $M(<\theta)$ of the Coma Cluster derived from NFW Jeans modeling of DESI galaxy kinematics. The vertical dotted line indicates the scale radius $r_s \approx 1.05^\circ$ ($1.81\text{ Mpc}$).*
+4. **Dynamical Mass Estimation**:
+   Integrating the Jeans equation for the best-fit NFW potential yields Coma's scale radius, enclosed radial mass profile $M(<r)$, and virial mass ($M_{200}$).
 
 ---
 
-## Data Reduction & Methodology Pipeline
+## Results & Findings
 
-1. **Target Selection (`data_prep.py`)**:
-   - Extract galaxy targets from DESI Iron primary catalogs (`zall-pix-iron.fits`).
-   - Quality cuts: `SPECTYPE == 'GALAXY'`, `ZWARN == 0`, `ZCAT_PRIMARY == True`.
-2. **Relativistic Kinematics & Interloper Clipping (`data_filter_calc.py`)**:
-   - Convert redshifts to exact relativistic line-of-sight Doppler velocities:
-     $$v_{\text{LOS}} = c \cdot \frac{(1+z)^2 - 1}{(1+z)^2 + 1}$$
-   - Spatial cone centered on $(\alpha_0, \delta_0) = (194.953^\circ, +27.981^\circ)$ within $\theta \le 2.0^\circ$ and $z \in [0.013, 0.033]$.
-   - Apply iterative $3\sigma$ velocity clipping ($\|v_{\text{LOS}} - v_{\text{median}}\| \le 3\sigma_v$) to reject unbound background/foreground interlopers, yielding $N = 2,098$ confirmed member galaxies.
-3. **Jeans Modeling & Mass Profiling (`calc_n_model_plot.py`)**:
-   - Measure intrinsic velocity dispersion $\sigma_{\text{int}}$ across 8 radial bins by subtracting mean spectrograph measurement errors in quadrature.
-   - Perform non-linear least-squares fitting (`scipy.optimize.curve_fit`) to evaluate SIS, Soft-Core, and NFW halo profiles.
-   - Calculate Bayesian Information Criterion ($\text{BIC} = \chi^2 + k \ln N$) and integrate the NFW potential to compute $M(<r)$.
+### Halo Model Comparison
+
+The flat Singular Isothermal Sphere model fails to describe the cluster kinematics, severely missing both the core peak and the outer decline. While a soft-core model performs better, the **cuspy NFW profile provides the best description** of the DESI data, fitting the entire radial span with a reduced $\chi_\nu^2 = 0.69$.
+
+| Profile | Parameters | Best-Fit Value | $\chi^2$ | d.o.f. | $\chi_\nu^2$ | BIC | $\Delta \text{BIC}$ |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Singular Isothermal Sphere (SIS)** | $\sigma_0$ | $946.99 \pm 14.69\text{ km s}^{-1}$ | 22.61 | 7 | 3.23 | 24.69 | $+16.42$ |
+| **Soft-Core** | $\sigma_{0,c}, \theta_c$ | $1027.35\text{ km s}^{-1}, 1.41^\circ$ | 7.47 | 6 | 1.24 | 11.63 | $+3.36$ |
+| **NFW (Cuspy CDM)** | $\sigma_{\text{max}}, \theta_s$ | $1093.30 \pm 42.66\text{ km s}^{-1}, 1.05^\circ \pm 0.35^\circ$ | **4.11** | **6** | **0.69** | **8.27** | **0.00** |
+
+![Model Comparison](model_comparison.png)
+
+*Figure 1: Observed intrinsic line-of-sight velocity dispersion profile (points with error bars) plotted against the SIS baseline (blue dashed), Soft-Core fit (orange dash-dotted), and NFW cuspy halo (green solid).*
+
+### Mass Estimates & Literature Context
+
+At an assumed distance of $D \approx 98.9\text{ Mpc}$ ($z \approx 0.0231$, $H_0 = 70\text{ km s}^{-1}\text{Mpc}^{-1}$), the fitted NFW scale angle corresponds to a physical scale radius of $r_s \approx 1.81\text{ Mpc}$.
+
+- **Virial Mass ($r_{\text{vir}} \approx 2.0\text{ Mpc}$)**: $M_{\text{vir}} = (5.11 \pm 0.45) \times 10^{14} \, \mathrm{M}_\odot$
+- **Total Enclosed Mass within $2.0^\circ$ ($\approx 3.45\text{ Mpc}$)**: $M(<2.0^\circ) = 9.57 \times 10^{14} \, \mathrm{M}_\odot$
+
+![Enclosed Mass Profile](coma_enclosed_mass_profile.png)
+
+*Figure 2: Enclosed mass profile $M(<\theta)$ computed by integrating the NFW potential. The dotted vertical line marks the scale radius $r_s \approx 1.05^\circ$ ($1.81\text{ Mpc}$).*
+
+These dynamical estimates agree well with independent multi-wavelength literature for Coma:
+- **Historical optical kinematics**: Łokas & Mamon (2003) obtained $(5\text{--}7) \times 10^{14} \, \mathrm{M}_\odot$ from 445 galaxies. The DESI sample increases member statistics nearly fivefold.
+- **X-ray hydrostatic mass**: Measurements from *ROSAT*, *XMM-Newton*, and *Chandra* report $M_{200} \approx (5.0\text{--}6.5) \times 10^{14} \, \mathrm{M}_\odot$.
+- **Weak lensing & Planck SZ**: Gravitational lensing and Sunyaev-Zel'dovich cluster profiles place $M_{200}$ in the range $(5.5\text{--}7.5) \times 10^{14} \, \mathrm{M}_\odot$.
+
+The consistency across optical kinematics, ICM X-ray gas, and weak lensing reinforces that Coma is close to dynamical equilibrium within its virial boundary and well described by a standard $\Lambda\text{CDM}$ cuspy halo.
 
 ---
 
-## Repository Structure
+## Repository Files
 
-```text
-├── data_prep.py                # Extracts DESI Iron FITS catalog & applies primary quality flags
-├── data_filter_calc.py         # Relativistic velocity calculations, spatial selection & 3σ clipping
-├── calc_n_model_plot.py        # Radial profile extraction, halo model fitting & plot generation
-├── coma_galaxy_data.csv        # Cleaned catalog of N=2,098 confirmed Coma member galaxies
-├── model_comparison.png        # Figure 1: Observed dispersion profile vs. SIS/Core/NFW fits
-├── coma_enclosed_mass_profile.png # Figure 2: NFW enclosed mass profile M(<r)
-├── paper/
-│   ├── aas_template.tex        # AAS TeX 6.31 LaTeX source file for the manuscript
-│   └── aas_template.pdf        # Compiled publication-ready PDF paper
-├── .gitignore                  # Git tracking rules (only paper/aas_template.tex tracked in paper/)
-├── LICENSE                     # MIT License
-└── README.md                   # Project overview & documentation
+- `data_prep.py`: Initial parser filtering the raw DESI Iron FITS catalog into a manageable tabular format.
+- `data_filter_calc.py`: Converts redshifts into relativistic Doppler velocities, applies coordinate cone cuts, and runs iterative $3\sigma$ velocity clipping.
+- `calc_n_model_plot.py`: Extracts the annular velocity dispersion profile, fits the halo models, computes BIC values, and generates the figures.
+- `coma_galaxy_data.csv`: The cleaned sample of $N = 2,098$ confirmed Coma member galaxies.
+- `paper/aas_template.tex`: Complete LaTeX manuscript drafted in AAS TeX 6.31 format.
+- `paper.pdf`: Compiled version of the manuscript.
+
+---
+
+## Author & Citation
+
+**Jubair Hossain**  
+Email: [enigmatic.jihad@gmail.com](mailto:enigmatic.jihad@gmail.com)
+
+```bibtex
+@article{Hossain2026ComaDESI,
+  title={Dynamical Mapping of the Coma Cluster: Testing $\Lambda$CDM Halo Models and Virial Mass with DESI Spectroscopy},
+  author={Hossain, Jubair},
+  year={2026}
+}
 ```
-
----
-
-## Quickstart & Usage
-
-### Prerequisites
-- Python 3.10+
-- `numpy`, `pandas`, `scipy`, `matplotlib`, `astropy`
-
-### Environment Setup
-```bash
-# Clone repository
-git clone https://github.com/zedxot/coma-cluster-dark-matter-profile.git
-cd coma-cluster-dark-matter-profile
-
-# Create & activate virtual environment
-python3 -m venv .venv
-source .venv/bin/activate
-
-# Install requirements
-pip install numpy pandas scipy matplotlib astropy
-```
-
-### Running the Analysis Pipeline
-```bash
-# 1. Perform velocity calculations and interloper rejection
-python data_filter_calc.py
-
-# 2. Run Jeans halo fitting, BIC model selection, and generate figures
-python calc_n_model_plot.py
-```
-
-### Compiling the Manuscript
-```bash
-cd paper
-pdflatex -shell-escape -interaction=nonstopmode aas_template.tex
-```
-
----
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
+[MIT License](LICENSE)
