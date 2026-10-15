@@ -13,33 +13,24 @@ with fits.open(fits_file, memmap=True) as hdu_list:
         (hdu.data['ZCAT_PRIMARY'] == True)
     )
     selected_cols = [
-    # Identifiers & Primary Flags
-    'TARGETID',         # Index 0   (K)  - Unique target identifier
-    'SURVEY',           # Index 1   (7A) - Survey program ('main', 'sv1', etc.)
-    'ZCAT_PRIMARY',     # Index 134 (L)  - Best redshift flag (eliminates duplicates)
-    
-    # Sky Coordinates
-    'TARGET_RA',        # Index 16  (D)  - Right Ascension (degrees)
-    'TARGET_DEC',       # Index 17  (D)  - Declination (degrees)
-    
-    # Redshifts & Spectroscopic Quality
-    'Z',                # Index 5   (D)  - Spectroscopic redshift
-    'ZERR',             # Index 6   (D)  - Redshift measurement error (for error propagation)
-    'ZWARN',            # Index 7   (K)  - Warning bitmask (0 = reliable fit)
-    'DELTACHI2',        # Index 14  (D)  - Fit significance over second-best template
-    'SPECTYPE',         # Index 11  (6A) - Spectral classification ('GALAXY')
-    'SUBTYPE',          # Index 12  (20A)- Sub-classification / spectral details
-    
-    # Optical Photometry & Extinction (Luminosities & Mass-to-Light Ratios)
-    'FLUX_G',           # Index 32  (E)  - Total g-band flux (nanomaggies)
-    'FLUX_R',           # Index 33  (E)  - Total r-band flux (nanomaggies)
-    'FLUX_Z',           # Index 34  (E)  - Total z-band flux (nanomaggies)
-    'EBV',              # Index 31  (E)  - Galactic extinction E(B-V) for de-reddening
-    
-    # Morphological Properties (Light Profile Tracers)
-    'MORPHTYPE',        # Index 30  (4A) - Morphological type (PSF, REX, EXP, DEV, COMP)
-    'SERSIC',           # Index 49  (E)  - Sersic index n
-    'SHAPE_R'           # Index 50  (E)  - Half-light radius in arcsec (for galaxy light profile)
+    'TARGETID',
+    'SURVEY',
+    'ZCAT_PRIMARY',
+    'TARGET_RA',
+    'TARGET_DEC',
+    'Z',
+    'ZERR',
+    'ZWARN',
+    'DELTACHI2',
+    'SPECTYPE',
+    'SUBTYPE',
+    'FLUX_G',
+    'FLUX_R',
+    'FLUX_Z',
+    'EBV',
+    'MORPHTYPE',
+    'SERSIC',
+    'SHAPE_R'
 ]
     
     data_dict = {
