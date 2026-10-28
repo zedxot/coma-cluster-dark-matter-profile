@@ -1,7 +1,5 @@
 # Ignore large raw data files
 galaxy_data_clean.csv
 
-# Ignore all build products and generated files in paper directory except the main LaTeX source
-paper/*
-!paper/aas_template.tex
-
+# Ignore paper compilation directory
+paper/

@@ -12,6 +12,7 @@ with fits.open(fits_file, memmap=True) as hdu_list:
         (hdu.data['ZWARN'] == 0) &
         (hdu.data['ZCAT_PRIMARY'] == True)
     )
+
     selected_cols = [
     'TARGETID',
     'SURVEY',
