@@ -39,7 +39,7 @@ The flat Singular Isothermal Sphere model fails to describe the cluster kinemati
 | **Soft-Core** | $\sigma_{0,c}, \theta_c$ | $1027.35\text{ km s}^{-1}, 1.41^\circ$ | 7.47 | 6 | 1.24 | 11.63 | $+3.36$ |
 | **NFW (Cuspy CDM)** | $\sigma_{\text{max}}, \theta_s$ | $1093.30 \pm 42.66\text{ km s}^{-1}, 1.05^\circ \pm 0.35^\circ$ | **4.11** | **6** | **0.69** | **8.27** | **0.00** |
 
-![Model Comparison](model_comparison.png)
+![Model Comparison](<Model Selection (SIS vs Cored vs NFW).png>)
 
 *Figure 1: Observed intrinsic line-of-sight velocity dispersion profile (points with error bars) plotted against the SIS baseline (blue dashed), Soft-Core fit (orange dash-dotted), and NFW cuspy halo (green solid).*
 
@@ -50,7 +50,7 @@ At an assumed distance of $D \approx 98.9\text{ Mpc}$ ($z \approx 0.0231$, $H_0 
 - **Virial Mass ($r_{\text{vir}} \approx 2.0\text{ Mpc}$)**: $M_{\text{vir}} = (5.11 \pm 0.45) \times 10^{14} \, \mathrm{M}_\odot$
 - **Total Enclosed Mass within $2.0^\circ$ ($\approx 3.45\text{ Mpc}$)**: $M(<2.0^\circ) = 9.57 \times 10^{14} \, \mathrm{M}_\odot$
 
-![Enclosed Mass Profile](coma_enclosed_mass_profile.png)
+![Enclosed Mass Profile](<Enclosed Mass Profile.png>)
 
 *Figure 2: Enclosed mass profile $M(<\theta)$ computed by integrating the NFW potential. The dotted vertical line marks the scale radius $r_s \approx 1.05^\circ$ ($1.81\text{ Mpc}$).*
 
