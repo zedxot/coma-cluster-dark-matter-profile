@@ -75,5 +75,6 @@ The consistency across optical kinematics, ICM X-ray gas, and weak lensing reinf
 ---
 
 ## License
-[MIT License](LICENSE)
+- **Code & Analysis Scripts**: Licensed under the [MIT License](LICENSE).
+- **Manuscript, Figures & Presentation**: Licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
