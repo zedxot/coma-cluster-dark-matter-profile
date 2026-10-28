@@ -4,7 +4,7 @@ This project is an observational and dynamical study of the **Coma Cluster (Abel
 
 Nearly a century after Fritz Zwicky first used galaxy velocity dispersions in Coma to infer the existence of "dunkle Materie," DESI provides thousands of precise redshifts across the cluster field. In this work, I isolate member galaxies, construct a line-of-sight velocity dispersion profile out to the cluster's virial boundary, and test whether cluster-scale dark matter halos favor a cuspy Navarro-Frenk-White ($\Lambda\text{CDM}$) profile or a cored distribution.
 
-A full draft of the manuscript is available in [`paper.pdf`](paper.pdf).
+A full draft of the manuscript prepared with the AAS TeX template is available in [`paper/paper_rewrite.tex`](paper/paper_rewrite.tex) (compiled PDF: [`paper/paper_rewrite.pdf`](paper/paper_rewrite.pdf)).
 
 ---
 
@@ -69,7 +69,8 @@ The consistency across optical kinematics, ICM X-ray gas, and weak lensing reinf
 - `data_filter_calc.py`: Converts redshifts into relativistic Doppler velocities, applies coordinate cone cuts, and runs iterative $3\sigma$ velocity clipping.
 - `calc_n_model_plot.py`: Extracts the annular velocity dispersion profile, fits the halo models, computes BIC values, and generates the figures.
 - `coma_galaxy_data.csv`: The cleaned sample of $N = 2,098$ confirmed Coma member galaxies.
-- `paper.pdf`: Complete compiled research manuscript drafted in AAS TeX 6.31 format.
+- `paper/paper_rewrite.tex`: Complete LaTeX manuscript drafted in AAS TeX 6.31 format.
+- `paper/paper_rewrite.pdf`: Compiled version of the research paper.
 
 ---
 

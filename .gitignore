@@ -1,5 +1,7 @@
 # Ignore large raw data files
 galaxy_data_clean.csv
 
-# Ignore paper compilation directory
-paper/
+# Ignore all build products and generated files in paper directory except the main LaTeX source and PDF
+paper/*
+!paper/paper_rewrite.tex
+!paper/paper_rewrite.pdf
